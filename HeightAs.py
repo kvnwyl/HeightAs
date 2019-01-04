@@ -7,15 +7,32 @@ class HeightAs:
             with open("objects.json") as f:
                 objects_json = json.loads(f.read())
         except Exception as e:
-            print("Unable to load foodstuffs.json file. Error: {0}".format(e))
+            print("Unable to load foodstuffs.json. Error: {0}".format(e))
             objects_json = {}
 
+        # For each key in the dictionary, create a method with the same
+        # name. This will make the key callable.
         for key in objects_json.keys():
             HeightAs.create_method(key, objects_json)
 
         self.height_in_mm = self.convert_height_to_mm(**kwargs)
 
     def convert_height_to_mm(self, **kwargs):
+        """Convert height into millimetres (mm) from a variety of
+        units.
+
+        Args:
+            **kwargs (dict): Keyword arguments to represent height
+                             units.
+
+        Returns:
+            height_in_mm (float): The final calculated height in mm.
+                                  rounded to the 2 decimal places.
+
+        Notes:
+            As this relies on the standard round() method to round the
+            number - it is prone to slight inaccuracies.
+        """
         feet = kwargs.get("feet", 0)
         inches = kwargs.get("inches", 0)
         m = kwargs.get("m", 0)
@@ -33,6 +50,14 @@ class HeightAs:
 
     @classmethod
     def create_method(cls, i, objects_json):
+        """Create a new method with the name of i
+
+        Args:
+            i (str): The name to give to the method on creation.
+
+        objects_json (dict): The dictionary of objects with their
+                             associated heights as millimetres (mm).
+        """
         def method(self, key=None):
             objects_dict = {}
 
