@@ -2,6 +2,10 @@ import json
 import math
 
 class HeightAs:
+    """Display your height as a quantity of a variety of different
+    objects. Objects and their height is stored in the objects.json
+    file.
+    """
     def __init__(self, **kwargs):
         try:
             with open("objects.json") as f:
